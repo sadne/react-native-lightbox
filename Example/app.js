@@ -40,7 +40,7 @@ export default () => (
       />
     </Lightbox>
     <View style={styles.text}><Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Text></View>
-    <Lightbox springConfig={{tension: 15, friction: 7}} swipeToDismiss={false} renderContent={renderCarousel}>
+    <Lightbox timingConfig={{}} swipeToDismiss={false} renderContent={renderCarousel}>
       <Image
         style={styles.carousel}
         resizeMode="contain"

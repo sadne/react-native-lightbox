@@ -54,9 +54,10 @@ export default class LightboxOverlay extends Component {
       width:    PropTypes.number,
       height:   PropTypes.number,
     }),
-    springConfig: PropTypes.shape({
-      tension:  PropTypes.number,
-      friction: PropTypes.number,
+    timingConfig: PropTypes.shape({
+      duration:       PropTypes.number,
+      easing:      PropTypes.any,
+      delay:      PropTypes.number,
     }),
     backgroundColor: PropTypes.string,
     isOpen:          PropTypes.bool,
@@ -69,7 +70,7 @@ export default class LightboxOverlay extends Component {
   };
 
   static defaultProps = {
-    springConfig: { tension: 30, friction: 7 },
+    timingConfig: { duration: 500, delay: 0 },
     backgroundColor: 'black',
   };
 
@@ -114,9 +115,9 @@ export default class LightboxOverlay extends Component {
           });
           this.close();
         } else {
-          Animated.spring(
+          Animated.timing(
             this.state.pan,
-            { toValue: 0, ...this.props.springConfig }
+            { toValue: 0, ...this.props.timingConfig }
           ).start(() => { this.setState({ isPanning: false }); });
         }
       },
@@ -143,9 +144,9 @@ export default class LightboxOverlay extends Component {
       }
     });
 
-    Animated.spring(
+    Animated.timing(
       this.state.openVal,
-      { toValue: 1, ...this.props.springConfig }
+      { toValue: 1, ...this.props.timingConfig }
     ).start(() => {
       this.setState({ isAnimating: false });
       this.props.didOpen();
@@ -160,9 +161,9 @@ export default class LightboxOverlay extends Component {
     this.setState({
       isAnimating: true,
     });
-    Animated.spring(
+    Animated.timing(
       this.state.openVal,
-      { toValue: 0, ...this.props.springConfig }
+      { toValue: 0, ...this.props.timingConfig }
     ).start(() => {
       this.setState({
         isAnimating: false,
@@ -229,11 +230,7 @@ export default class LightboxOverlay extends Component {
     )}</Animated.View>);
     const content = (
       <Animated.View style={[openStyle, dragStyle]} {...handlers}>
-        {clickToDismiss ? (
-          <TouchableOpacity onPress={this.close}>
-            {this.props.children}
-          </TouchableOpacity>
-        ) : this.props.children}
+        {this.props.children}
       </Animated.View>
     );
 
@@ -244,6 +241,17 @@ export default class LightboxOverlay extends Component {
           {content}
           {header}
         </View>
+      );
+    }
+    if (clickToDismiss) {
+      return (
+        <Modal visible={isOpen} transparent={true} onRequestClose={() => this.close()}>
+          <TouchableOpacity style={{flex: 1}} activeOpacity={1} onPress={() => this.close()}>
+            {background}
+            {content}
+            {header}
+          </TouchableOpacity>
+        </Modal>
       );
     }
 

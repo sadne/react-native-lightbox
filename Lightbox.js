@@ -15,9 +15,10 @@ export default class Lightbox extends Component {
     onOpen:          PropTypes.func,
     willClose:       PropTypes.func,
     onClose:         PropTypes.func,
-    springConfig:    PropTypes.shape({
-      tension:       PropTypes.number,
-      friction:      PropTypes.number,
+    timingConfig:    PropTypes.shape({
+      duration:       PropTypes.number,
+      easing:      PropTypes.any,
+      delay:      PropTypes.number,
     }),
     clickToDismiss:  PropTypes.bool,
     swipeToDismiss:  PropTypes.bool,
@@ -62,7 +63,7 @@ export default class Lightbox extends Component {
     renderHeader: this.props.renderHeader,
     swipeToDismiss: this.props.swipeToDismiss,
     clickToDismiss: this.props.clickToDismiss,
-    springConfig: this.props.springConfig,
+    timingConfig: this.props.timingConfig,
     backgroundColor: this.props.backgroundColor,
     children: this.getContent(),
     didOpen: this.props.didOpen,
