@@ -19,11 +19,13 @@ export default class Lightbox extends Component {
       tension:       PropTypes.number,
       friction:      PropTypes.number,
     }),
+    clickToDismiss:  PropTypes.bool,
     swipeToDismiss:  PropTypes.bool,
   };
 
   static defaultProps = {
     swipeToDismiss: true,
+    clickToDismiss: false,
     onOpen: () => {},
     didOpen: () => {},
     willClose: () => {},
@@ -59,6 +61,7 @@ export default class Lightbox extends Component {
     origin: this.state.origin,
     renderHeader: this.props.renderHeader,
     swipeToDismiss: this.props.swipeToDismiss,
+    clickToDismiss: this.props.clickToDismiss,
     springConfig: this.props.springConfig,
     backgroundColor: this.props.backgroundColor,
     children: this.getContent(),

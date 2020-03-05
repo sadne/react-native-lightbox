@@ -65,6 +65,7 @@ export default class LightboxOverlay extends Component {
     onClose:         PropTypes.func,
     willClose:         PropTypes.func,
     swipeToDismiss:  PropTypes.bool,
+    clickToDismiss:  PropTypes.bool,
   };
 
   static defaultProps = {
@@ -181,6 +182,7 @@ export default class LightboxOverlay extends Component {
       isOpen,
       renderHeader,
       swipeToDismiss,
+      clickToDismiss,
       origin,
       backgroundColor,
     } = this.props;
@@ -227,7 +229,11 @@ export default class LightboxOverlay extends Component {
     )}</Animated.View>);
     const content = (
       <Animated.View style={[openStyle, dragStyle]} {...handlers}>
-        {this.props.children}
+        {clickToDismiss ? (
+          <TouchableOpacity onPress={this.close}>
+            {this.props.children}
+          </TouchableOpacity>
+        ) : this.props.children}
       </Animated.View>
     );
 
